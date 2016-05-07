@@ -1,0 +1,22 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "{a89337b0-f2de-11e5-a489-d1e535ef51ab}"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "{a89337b0-f2de-11e5-a489-d1e535ef51ab}"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "488794373348",
+            "PACKAGE_NAME": "{a89337b0-f2de-11e5-a489-d1e535ef51ab}"
+        }
+    },
+    "dependent_plugins": {}
+}

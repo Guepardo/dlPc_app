@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+	<meta charset="utf-8" />
+	<!-- <meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" /> -->
+	<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+	<!-- 	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="css/foundation.min.css" />
+	<title>Hello World</title>
+
+</head>
+<body>
+	<div class="row" style="margin-bottom: 100px; ">
+		<div class=" medium-12 columns">
+			<h1>DeliveryPc</h1>
+			<small>Versão 0.1</small>
+			<small>Login/registro</small>
+		</div>
+	</div>
+
+	<form id="form-login" data-abide novalidate class="hide">
+		<div class="row">
+			<div class=" medium-12 columns">
+				<label>
+					DDD: 
+					<input type="text" name='dd'describedby="dd_describe" placeholder="00" required>
+					<span class="form-error">Preencha este campo.</span>
+				</label>
+				<p class="help-text" id="dd_describe">Coloque apenas dois números</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class=" medium-12 columns">
+				<label>
+					Phone: 
+					<input type="text" name='phone'describedby="=phone_describe" placeholder="00" required>
+					<span class="form-error">Preencha este campo.</span>
+				</label>
+				<p class="help-text" id="=phone_describe">Coloque apenas números</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class=" medium-12 columns">
+				<input type="submit" class="button small" value="Cadastrar">
+			</div>
+		</div>
+	</form>
+
+	<form id="form-validation-code" data-abide novalidate class="hide">
+		<div class="row">
+			<div class=" medium-12 columns">
+				<label>
+					Código de Verificação: 
+					<input type="text" name='validation_code'describedby="validation_code" required>
+					<span class="form-error">Preencha este campo.</span>
+				</label>
+				<p class="help-text" id="validation_code">O código chegará em instantes via <b>sms</b></p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class=" medium-12 columns">
+				<input type="submit" class="button small" value="Cadastrar">
+			</div>
+		</div>
+	</form>
+
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+	<script type="text/javascript" src="js/foundation.min.js"></script>
+	<script type="text/javascript" src="js/alertify.js"></script>
+	<script type="text/javascript" src="js/deliverypc/DeliveryLocalStorage.js"></script>
+	<script type="text/javascript" src="js/deliverypc/DeliveryPushNotification.js"></script>
+	<script type="text/javascript" src="js/deliverypc/DeliveryAPI.js"></script>
+	<script type="text/javascript">
+		$(document).foundation();
+
+		
+
+		$(document).ready(function(){
+			var dls = new DeliveryLocalStorage(); 
+
+			function needValidate(){
+				var temp = dls.get('needValidate'); 
+				alert(temp); 
+				if(temp == 'true')
+					$('#form-validation-code').removeClass('hide'); 
+				else
+					$('#form-login').removeClass('hide'); 
+			}
+
+			function switchForm(){
+				$('#form-validation-code').removeClass('hide'); 
+				$('#form-login').addClass('hide'); 
+				var temp = dls.get('needValidate'); 
+				alert(temp); 
+			}
+		
+			needValidate(); 
+
+			//Register handler; 
+			$('#form-login').
+			on('valid.zf.abide', function(event){
+				if(event.target.type != "submit")
+					return; 
+				var param = $(this).serializeArray();
+				var gcm_key = dls.get('gcm_key'); 
+
+				param.push( new Object({name: 'gcm_key', value: gcm_key})); 
+
+				DeliveryAPI.register(param,function(data){
+					if(!data.status)
+						alertify.alert(data.msg); 
+					else{
+						dls.set('needValidate','true'); 
+						switchForm(); 
+					}
+				}); 
+			}).
+			on('submit', function(event){
+				event.preventDefault(); 
+			}); 
+
+			//Validate handler; 
+			$('#form-validation-code'). 
+			on('valid.zf.abide', function(event){
+				if(event.target.type != "submit")
+					return; 
+				var param = $(this).serializeArray(); 
+
+				DeliveryAPI.validate(param, function(data){
+					if(data.status){
+						dls.set('api_key', data.api_key); 
+						window.location.href = 'index.html'; 
+					}
+					else
+						alertify.alert(msg.error); 
+				}); 
+			}).
+			on('submit', function(event){
+				event.preventDefault(); 
+			}); 
+		}); 
+
+
+	</script>
+</body>
+</html>

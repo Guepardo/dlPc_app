@@ -1,0 +1,48 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "Properties/WMAppManifest.xml": {
+                "parents": {
+                    "/Deployment/App/Capabilities": [
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_LOCATION\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "{a89337b0-f2de-11e5-a489-d1e535ef51ab}"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "{a89337b0-f2de-11e5-a489-d1e535ef51ab}"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "488794373348",
+            "PACKAGE_NAME": "{a89337b0-f2de-11e5-a489-d1e535ef51ab}"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "file": "plugins/phonegap-plugin-push/www/push.js",
+            "id": "phonegap-plugin-push.PushNotification",
+            "pluginId": "phonegap-plugin-push",
+            "clobbers": [
+                "PushNotification"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-geolocation": "2.1.0",
+        "cordova-plugin-whitelist": "1.2.1",
+        "phonegap-plugin-push": "1.6.1"
+    }
+}

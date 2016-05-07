@@ -1,0 +1,14 @@
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\ApplicationIcon.png
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\Background.png
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\com.phonegap.helloworld.dll
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\com.phonegap.helloworld.pdb
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\AppManifest.xaml
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\Properties\WMAppManifest.xml
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\Bin\Debug\CordovaAppProj_Debug_AnyCPU.xap
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\App.g.cs
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\cordovalib\CordovaView.g.cs
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\MainPage.g.cs
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\com.phonegap.helloworld.g.resources
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\com.phonegap.helloworld.dll
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\com.phonegap.helloworld.pdb
+C:\Users\bsine\Desktop\deliverypc_app\platforms\wp8\obj\Debug\XapCacheFile.xml

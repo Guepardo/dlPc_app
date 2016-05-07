@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html>
+<head>
+    <meta charset="utf-8" />
+        <!-- <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" /> -->
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="css/foundation.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+        <title>Hello World</title>
+        <style type="text/css">
+            .button{
+                width: 100%;
+                height: 150px;
+                border-radius: 4px; 
+            }
+
+            .border{
+                background-color: #FFFFFF;
+                color: #000000;
+                border: 1px solid;
+            }
+
+            .border:hover{
+                background-color: #FFFFFF;
+                color: #000000;
+                /*border: 1px solid;*/
+            }
+
+            .cancel-button{
+                height: 100px;
+            }
+
+            .reveal{
+                z-index: 0;
+            }
+
+            button.ok{
+                background-color:#3adb76 !important;
+                color:white !important;
+            }
+
+            button.cancel{
+                background-color:#ec5840 !important;
+                color:white !important;
+            }
+
+            .center{
+                position: relative !important;
+                text-align: center !important;
+            }
+
+            .box{
+                color: #000000;
+                border: 1px solid;
+                border-color: #B9BBB8;
+                margin-bottom: 20px;
+                border-radius: 4px; 
+                background-color:#F1F1F1;
+            }
+
+            .cancel{
+                height: 60px; 
+                margin:0;
+                margin-top: 20px; 
+                border-radius: 0 0 4px 4px;
+            }
+        </style>
+    </head>
+
+    <body class="hide">
+        <div class="row" style="margin-bottom: 100px; ">
+            <div class=" medium-12 columns">
+                <h1 style="text-align: center; margin-top: 50px;"><img src="img/delivery.png"></h1><small>Versão 0.1</small>
+            </div>
+        </div>
+
+        <div id="status_order" class="row hide">
+            <div class=" medium-12 columns">
+               <div class="box">
+                <h2 style="text-align:center;">Sobre o seu pedido</h2>
+                <small> <i>Progresso do pedido:<b id="status_order_label"> técnico a caminho.</b></i></small>
+
+
+                <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="20" aria-valuemin="0" aria-valuetext="25 percent" aria-valuemax="100">
+                  <span id="progressbar" class="progress-meter">
+                    <p class="progress-meter-text">25%</p>
+                </span>
+            </div>
+
+            <div id="about_tech">
+              <hr style="margin: 0; border-style:solid;"/> 
+              <h2 style="text-align:center;">Sobre o técnico</h2>
+              <small> <i>Nome: <b id="tech_name" >Allyson Maciel</b></i></small><br>
+              <small> <i>Telefone: <b id="tech_phone" >62 9823432</b></i></small><br>
+              <small> <i>Atendimentos: <b id="tech_count_solicitation">Já atendeu 100 pedidos</b></i></small><br>
+              <small> <i>Reputação: <b id="tech_rate">10 estrelas</b></i></small><br>
+              <button id="button_cancel_solicitation" type="button" class="alert button cancel">Cancelar</button>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class=" medium-12 columns">
+        <button data-open="create_solicitation_modal" class="button expanded large border">Criar solicitação</button>
+    </div>
+</div>
+<div class="row">
+    <div class=" medium-12 columns">
+        <button class="button expanded large border"> Press here</button>
+    </div>
+</div>
+<div class="row">
+    <div class=" medium-12 columns">
+        <button class="button expanded large border"> Press here</button>
+    </div>
+</div>
+<div class="row">
+    <div class=" medium-12 columns">
+        <button class="button expanded large border"> Press here</button>
+    </div>
+</div>
+<div class="row">
+    <div class=" medium-12 columns">
+        <a href="login.html" class="button expanded large border"> Press here</a>
+    </div>
+</div>
+<!-- MODAL -->
+<div class="reveal full" id="create_solicitation_modal" data-reveal>
+    <h1>Chamar um Técnico</h1>
+    <p>Precisamos de alguns dados.</p>
+    <!-- getting gps position -->
+    <div id="onGetPosition" class="row">
+        <div class="small-12 columns" style="margin: 20px 0;">
+            <div class="center"><i class="fa fa-circle-o-notch fa-spin fa-3x "></i></div><br>
+            <small>Obtendo localização via gps.... <b>Ative o gps</b>.</small>
+        </div>
+    </div>
+    <!-- gps position has got -->
+    <div id="onGotPosition" class="row hide">
+        <div class="small-12 columns" style="margin: 20px 0;">
+            <div class="center"><i class="fa fa-check fa-3x " style="color:#3adb76"></i></div><br>
+            <small>Ok, tenho a sua localização.</small>
+        </div>
+    </div>
+    <!-- fail to get position -->
+    <div id="onFailPosition" class="row hide">
+        <div class="small-12 columns" style="margin: 20px 0;">
+            <div class="center"><i class="fa fa-exclamation-triangle fa-3x " style="color:#ec5840"></i></div><br>
+            <small>Falha ao obter localização, <b style="color:#ec5840">ative o gps</b>.</small>
+        </div>
+    </div>
+    <form id="form-create-solicitation" data-abide novalidate>
+        <input id="latitude"  type="hidden" value="">
+        <input id="longitude" type="hidden" value="">
+
+        <div class="row">
+            <div class=" small-12 columns">
+                <label>
+                    Complemento do endereço:
+                    <input type="text" name='address_complement' value="" describedby="address_complement" placeholder="N.1, Q.1 e L.9 ou 15ª andar" required />
+                    <span class="form-error">Preencha este campo</span>
+                </label>
+                <p class="help-text text-justify" id="address_complement" >A localização da sua residência é recuperada via <b>gps</b>. No entanto, é necessário um complemento do seu endereço para que o técnico chegue na sua casa o mais rápido possível.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" small-12 columns">
+                <input type="submit" class="button success medium" value="Chamar">
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class=" small-12 columns">
+            <button  id="close-create-solicitation"class="button alert medium cancel-button">Cancelar</button>
+        </div>
+    </div>
+
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="js/foundation.min.js"></script>
+<script type="text/javascript" src="js/alertify.js"></script>
+<script type="text/javascript" src="js/deliverypc/DeliveryLocalStorage.js"></script>
+<script type="text/javascript" src="js/deliverypc/DeliveryAPI.js"></script>
+<script type="text/javascript" src="js/deliverypc/DeliveryPushNotification.js"></script>
+<script type="text/javascript">
+    $(document).foundation();
+
+    function getStatus(){
+        DeliveryAPI.getStatus(function(data){
+            if(data.status){
+                $("#status_order").removeClass('hide'); 
+                var tech = data.result.tech;
+
+                var label;
+                var progress; 
+                switch(data.result.orderStatus){
+                    case '0': 
+                    label = "sendo encaminhado."; 
+                    progress = '15%';
+                    $('#about_tech').addClass('hide');  
+                    break; 
+                    case '2': 
+                    label = "técnico a caminho"; 
+                    progress = '50%';
+                    $('#about_tech').removeClass('hide'); 
+                }
+
+                $('#progressbar').css('width',  progress); 
+                $($('#progressbar').find('p.progress-meter-text')[0]).text(progress); 
+
+                $('#status_order_label').text(label); 
+                if( typeof tech != 'undefined'){
+                    $('#tech_name').text(tech.name); 
+                    $('#tech_phone').text(tech.phone); 
+                    $('#tech_count_solicitation').text(tech.count_solicitation); 
+                    $('#tech_rate').text(tech.count_cancel); 
+                }
+
+            }else{
+                $('#status_order').addClass('hide'); 
+            }
+        }); 
+    }; 
+
+
+    function onSuccess(position) {
+        $('#onGetPosition').addClass('hide');
+        $('#onGotPosition').removeClass('hide');
+        hasPosition = true; 
+
+        $('#latitude').val(position.coords.longitude); 
+        $('#longitude').val(position.coords.latitude); 
+    };
+
+    function onError(error) {
+        $('#onGetPosition').addClass('hide');
+        $('#onFailPosition').removeClass('hide');
+        hasPosition = false; 
+            // alertify.alert('test'); 
+        }
+
+        function onCreateSolicitation(){
+            $('#onGetPosition').removeClass('hide');
+            $('#onGotPosition').addClass('hide');
+            $('#onFailPosition').addClass('hide');
+
+            setTimeout(function(){
+             navigator.geolocation.getCurrentPosition(onSuccess, onError,{ enableHighAccuracy: true });
+         },2000);
+        }
+
+        function isRegistred(){
+            var dls = new DeliveryLocalStorage();
+            if(!dls.exists('api_key'))
+                window.location.href = 'login.html';
+            else
+                $('body').removeClass('hide');
+        }
+
+        function confirmSolicitation(param){
+          alertify
+          .okBtn("Confirmar")
+          .cancelBtn("Cancelar")
+          .confirm("Confirmar envio de solicitação", function (ev) {
+              ev.preventDefault();
+
+
+              var longitude = $('#longitude').val(); 
+              var latitude  = $('#latitude').val(); 
+
+              param.push(new Object({ 'name': 'longitude', 'value': longitude})); 
+              param.push(new Object({ 'name': 'latitude' , 'value': latitude})); 
+
+              DeliveryAPI.createSolicitation(param,function(data){
+                if(!data.status)
+                    alertify.alert(data.msg); 
+                else{
+                 $('#create_solicitation_modal').foundation('close');
+                 alertify.alert("<b style='color:#3adb76' >Pedidio enviado</b>. Aguarde até que um técnico alocado para a sua solicitação. Mandaremos uma mensagem para você assim que isso ocorrer."); 
+             }
+         }); 
+
+          }, function(ev) {
+
+              // The click event is in the
+              // event variable, so you can use
+              // it here.
+              ev.preventDefault();
+
+              alertify.error("You've clicked Cancel");
+
+          });
+      }
+
+      var hasPosition = false; 
+      $(document).ready(function(){
+        isRegistred();
+        getStatus(); 
+        DeliveryPushNotification.setOnNotification(getStatus); 
+
+        $(document).foundation();
+
+        $('#create_solicitation_modal').on('open.zf.reveal', function () {
+            onCreateSolicitation(); 
+        });
+
+        $('#create_solicitation_modal').on('closed.zf.reveal', function () {
+            $('#onGetPosition').removeClass('hide');
+            $('#onGotPosition').addClass('hide');
+            $('#onFailPosition').addClass('hide');
+            getStatus(); 
+        });
+
+        $('#button_cancel_solicitation').click(function(){
+            DeliveryAPI.cancelSolicitation(function(data){
+                if(data.status){
+                    alertify.alert("Seu pedido foi cancelado"); 
+                    getStatus(); 
+                }
+            }); 
+        }); 
+
+        $('#form-create-solicitation').
+        on('formvalid.zf.abide', function(event){
+            if(!hasPosition){
+                onCreateSolicitation(); 
+                return;
+            }
+
+            var param = $(this).serializeArray();
+            confirmSolicitation(param); 
+        }).
+        on('invalid.zf.abide', function(){
+            if(!hasPosition)
+                onCreateSolicitation(); 
+        }). 
+        on('submit', function(event){
+            event.preventDefault();
+        });
+
+        $('#close-create-solicitation').click(function(){
+            $('#create_solicitation_modal').foundation('close');
+        }); 
+
+    });
+</script>
+</body>
+</html>
